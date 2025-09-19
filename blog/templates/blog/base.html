@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+   <!-- bootstrap -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+   <!-- Optional theme -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+   <!-- Medium style editor -->
+   <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+   <!-- custom css -->
+   <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+   <!-- fonts -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Russo+One&display=swap" rel="stylesheet">
+
+</head>
+<body class="loader">
+    <!-- navbar -->
+    <nav class="navbar navbar-default techfont custom-navbar ">
+     <div class="container">
+      <ul class="nav navbar-nav">
+        <li ><a class="navbar-brand bigbrand" href="{% url 'post_list' %}">Meriem</a></li>
+        <li ><a class="" href="{% url 'about' %}">About</a></li>
+        <li ><a class="" href="https://github.com/">Github</a></li>
+        <li ><a class="" href="https://linkedin.com/">LinkedIn</a></li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+       {% if user.is_authenticated %}
+       <li ><a class="" href="{% url 'post_new' %}">New Post</a></li>
+       <li ><a class="" href="{% url 'draft_list' %}">Drafts</a></li>
+       <li >
+        <form method="post" action="{% url 'logout' %}"> 
+        {% csrf_token %} 
+        <button type="submit">Logout</button>  
+         </form> 
+       </li>
+       <li><a href="">welcome: {{user.username}}</a></li>
+       {% else %}
+       <li ><a  href="{% url 'login' %}"><span class="glyphicon glyphicon-user"></span></a></li>
+
+       {% endif %}
+      </ul>
+     </div>
+    </nav>
+    <!-- Content block -->
+     <div class="content container">
+        <div class="row">
+        <div class="col-md-8">
+            <div class="blog_posts">
+
+                {% block content %}
+                
+                {% endblock %}
+            </div>
+
+        </div>
+        </div>
+
+     </div>
+</body>
+</html>
